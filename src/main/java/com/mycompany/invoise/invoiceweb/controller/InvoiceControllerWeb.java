@@ -1,4 +1,4 @@
-package com.mycompany.invoice.invoiceweb.controller;
+package com.mycompany.invoise.invoiceweb.controller;
 
 import com.mycompany.invoise.core.controller.InvoiceControllerInterface;
 import com.mycompany.invoise.core.entity.Invoice;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-//@Controller
+@Controller
 public class InvoiceControllerWeb implements InvoiceControllerInterface {
     @Autowired
     private InvoiceServiceInterface invoiceService;
@@ -35,6 +35,6 @@ public class InvoiceControllerWeb implements InvoiceControllerInterface {
         System.out.println( "La méthode display home a était invoqué" );
 
         List<Invoice> invoices = invoiceService.getInvoiceList();
-        return invoices;
+        return  invoices;
     }
 }
