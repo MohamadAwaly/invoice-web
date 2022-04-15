@@ -26,7 +26,7 @@ public class InvoiceControllerWeb {
         this.invoiceService = invoiceService;
     }
 
-    /*@PostMapping("")
+    @PostMapping("/create")
     public String createInvoice(@Valid @ModelAttribute InvoiceForm invoiceForm, BindingResult results) {
         if(results.hasErrors()){
             return "invoice-create-form";
@@ -37,7 +37,7 @@ public class InvoiceControllerWeb {
         invoice.setOrderNumber(invoiceForm.getCustomerName());
         invoiceService.createInvoice(invoice);
         return "invoice-created";
-    }*/
+    }
 
     @GetMapping("/home")
     public String displayHome(Model model) {
