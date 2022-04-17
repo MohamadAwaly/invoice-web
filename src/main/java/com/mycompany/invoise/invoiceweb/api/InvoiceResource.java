@@ -1,6 +1,5 @@
-package com.mycompany.invoise.invoiceweb.controller;
+package com.mycompany.invoise.invoiceweb.api;
 
-import com.mycompany.invoise.core.controller.InvoiceControllerInterface;
 import com.mycompany.invoise.core.entity.Invoice;
 import com.mycompany.invoise.core.service.InvoiceServiceInterface;
 import com.mycompany.invoise.invoiceweb.form.InvoiceForm;
@@ -11,10 +10,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/invoice")
-public class InvoiceControllerWeb {
+public class InvoiceResource {
     @Autowired
     private InvoiceServiceInterface invoiceService;
 
@@ -26,35 +26,26 @@ public class InvoiceControllerWeb {
         this.invoiceService = invoiceService;
     }
 
-    @PostMapping("/create")
-    public String createInvoice(@Valid @ModelAttribute InvoiceForm invoiceForm, BindingResult results) {
-        if(results.hasErrors()){
-            return "invoice-create-form";
-        }
-
-        Invoice invoice = new Invoice();
-        invoice.setCustomerName(invoiceForm.getCustomerName());
-        invoice.setOrderNumber(invoiceForm.getCustomerName());
+    @PostMapping
+    public Invoice create (@RequestBody Invoice invoice) {
         invoiceService.createInvoice(invoice);
-        return "invoice-created";
+        return invoice;
     }
 
-    @GetMapping("/home")
-    public String displayHome(Model model) {
+    @GetMapping
+    public List<Invoice> list() {
         System.out.println("La méthode display home a était invoqué");
-        model.addAttribute("invoices", invoiceService.getInvoiceList());
-        return "invoice-home";
+        return invoiceService.getInvoiceList();
     }
 
-    /*@GetMapping("/{id}")
-    public String displayInvoice(@PathVariable("id") String number, Model model) {
+    @GetMapping("/{id}")
+    public Invoice get(@PathVariable("id") String number) {
         System.out.println("La méthode display invoice a était invoqué");
-        model.addAttribute("invoice", invoiceService.getInvoiceByNumber(number));
-        return "invoice-details";
-    }*/
+        return invoiceService.getInvoiceByNumber(number);
+    }
 
-    @GetMapping("/create-form")
+    /*@GetMapping("/create-form")
     public String displayInvoiceCreateForm(@ModelAttribute InvoiceForm invoice) {
         return "invoice-create-form";
-    }
+    }*/
 }
